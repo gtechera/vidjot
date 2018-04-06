@@ -1,7 +1,22 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const mongoose = require("mongoose");
 
 const app = express();
+
+//Connect to mongose
+mongoose
+  .connect("mongodb://localhost/vidjot-dev")
+  .then(() => {
+    console.log("MongoDB Connected...");
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+//Load Idea Model
+require("./models/Idea");
+const Idea = mongoose.model("ideas");
 
 //Handlebars Middleware
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -16,6 +31,11 @@ app.get("/", (req, res) => {
 //About Route
 app.get("/about", (req, res) => {
   res.render("about");
+});
+
+//Add Idea Form
+app.get("/ideas/add", (req, res) => {
+  res.render("ideas/add");
 });
 
 const port = 5000;

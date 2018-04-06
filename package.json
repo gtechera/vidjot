@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.4",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.0.13",
+    "npm": "^5.8.0"
   }
 }
