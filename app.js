@@ -38,9 +38,29 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
+//Ideas Index Page
+app.get("/ideas", (req, res) => {
+  Idea.find({})
+    .sort({ date: "desc" })
+    .then(ideas => {
+      res.render("ideas/index", { ideas: ideas });
+    });
+});
+
 //Add Idea Form
 app.get("/ideas/add", (req, res) => {
   res.render("ideas/add");
+});
+
+//Edit Idea Form
+app.get("/ideas/edit/:id", (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  }).then(idea => {
+    res.render("ideas/edit", {
+      idea: idea
+    });
+  });
 });
 
 //Process Form
@@ -59,7 +79,16 @@ app.post("/ideas", (req, res) => {
       details: req.body.details
     });
   } else {
-    res.send("passed");
+    const newUser = {
+      title: req.body.title,
+      details: req.body.details
+    };
+    new Idea(newUser)
+      .save()
+      .then(idea => {
+        res.redirect("/ideas");
+      })
+      .catch();
   }
 });
 
