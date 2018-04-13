@@ -1,5 +1,6 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
@@ -10,6 +11,7 @@ const app = express();
 
 //Load Routes
 const ideas = require("./routes/ideas");
+const users = require("./routes/users");
 
 //Connect to mongose
 mongoose
@@ -28,6 +30,9 @@ app.set("view engine", "handlebars");
 // parse application/x-www-form-urlencoded body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//Static folder
+app.use(express.static(path.join(__dirname, "public")));
 
 //Method-override Middleware
 app.use(methodOverride("_method"));
@@ -63,18 +68,9 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-//User Login Route
-app.get("/user/login", (req, res) => {
-  res.send("Login");
-});
-
-//User Register Route
-app.get("/user/register", (req, res) => {
-  res.send("Register");
-});
-
 //Use Routes
 app.use("/ideas", ideas);
+app.use("/users", users);
 
 const port = 5000;
 
