@@ -6,12 +6,15 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
-
+const passport = require("passport");
 const app = express();
 
 //Load Routes
 const ideas = require("./routes/ideas");
 const users = require("./routes/users");
+
+//Passport Config
+require("./config/passport")(passport);
 
 //Connect to mongose
 mongoose
