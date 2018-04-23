@@ -22,9 +22,7 @@ const db = require("./config/database");
 
 //Connect to mongose
 mongoose
-  .connect(db.mongoURI, {
-    useMongoClient: true
-  })
+  .connect(db.mongoURI)
   .then(() => {
     console.log("MongoDB Connected...");
   })
